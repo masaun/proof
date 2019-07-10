@@ -2,6 +2,7 @@
   "name": "react-uport-box",
   "version": "0.1.0",
   "private": true,
+  "main": "truffle.js",
   "devDependencies": {
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
@@ -15,7 +16,7 @@
     "cross-spawn": "4.0.2",
     "css-loader": "0.26.0",
     "detect-port": "1.0.1",
-    "dotenv": "2.0.0",
+    "dotenv": "^2.0.0",
     "eslint": "3.8.1",
     "eslint-config-react-app": "^0.5.0",
     "eslint-loader": "1.6.0",
@@ -57,12 +58,18 @@
     "redux": "^3.6.0",
     "redux-auth-wrapper": "^1.0.0",
     "redux-thunk": "^2.2.0",
+    "truffle-hdwallet-provider": "^1.0.13",
     "uport-connect": "^0.7.3"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "console": "truffle console --network development",
+    "migrate": "truffle migrate --reset --network development",
+    "migrate:ropsten": "truffle migrate --reset --network ropsten",
+    "migrate:kovan": "truffle migrate --reset --network kovan",
+    "migrate:rinkeby": "truffle migrate --reset --network rinkeby"
   },
   "jest": {
     "collectCoverageFrom": [
