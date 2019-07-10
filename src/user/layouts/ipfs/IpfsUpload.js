@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Profile extends Component {
+class IpfsUpload extends Component {
   constructor(props, { authData }) {
     super(props)
     authData = this.props

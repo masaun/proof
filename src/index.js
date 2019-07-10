@@ -24,7 +24,7 @@ ReactDOM.render((
           <IndexRoute component={Home} />
           <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
-          <Route path="ipfs-upload" component={UserIsAuthenticated(IpfsUpload)} />
+          <Route path="ipfs" component={UserIsAuthenticated(IpfsUpload)} />
         </Route>
       </Router>
     </Provider>
