@@ -4,7 +4,6 @@ const HDWalletProvider = require("truffle-hdwallet-provider");
 const mnemonic = process.env.MNEMONIC;
 const infura_api_key = process.env.INFURA_API_KEY;
 
-
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
