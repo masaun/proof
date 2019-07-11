@@ -54,14 +54,14 @@ class IpfsUpload extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <h1>IPFS upload</h1>
-            <p>Upload Image is here</p>
+            <h1>IPFS uploader</h1>
             <p>
               <strong>Name</strong><br />
               {this.props.authData.name}
             </p>
 
-            <img src="" alt="" />
+            <p>This image is stored on IPFS & The Ethereum Blockchain!</p>
+            <img src={ `https://ipfs.io/ipfs/${this.state.ipfsHash}` } alt="" />
             <h2>Upload Image</h2>
             <form onSubmit={this.onSubmit}>
               <input type='file' onChange={this.captureFile} />
