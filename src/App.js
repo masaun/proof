@@ -42,6 +42,9 @@ class App extends Component {
         <li className="pure-menu-item">
           <Link to="/ipfs" className="pure-menu-link">IPFS Upload</Link>
         </li>
+        <li className="pure-menu-item">
+          <Link to="/ipfs_upload_simple" className="pure-menu-link">IPFS Upload Simple</Link>
+        </li>
         <LogoutButtonContainer />
       </span>
     )
