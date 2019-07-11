@@ -10,7 +10,7 @@ contract SimpleStorage {
       string authDataName;
       string IPFSHash;
   }
-  mapping (address => PhotoID) photoID;
+  mapping (address => PhotoID) photoIDs;
   
   
   event SavePhotoID(address indexed applicantAddress, string indexed authDataName, string indexed ipfsHash);
@@ -34,7 +34,7 @@ contract SimpleStorage {
     public returns (address, string memory, string memory) 
   {
 
-    PhotoID storage photoID = photoID[_applicantAddress];
+    PhotoID storage photoID = photoIDs[_applicantAddress];
     photoID.authDataName = _authDataName;
     photoID.IPFSHash = _ipfsHash;
 
@@ -43,4 +43,20 @@ contract SimpleStorage {
     return (_applicantAddress, _authDataName, _ipfsHash);
   }
   
+
+  function getPhotoID(
+    address _applicantAddress
+  ) 
+    public returns (address, string memory, string memory)
+  {
+      string memory _authDataName;
+      string memory _IPFSHash;
+
+      PhotoID memory photoID = photoIDs[_applicantAddress];
+      _authDataName = photoID.authDataName;
+      _IPFSHash = photoID.IPFSHash;
+
+      return (_applicantAddress, _authDataName, _IPFSHash);
+  }
+
 }
