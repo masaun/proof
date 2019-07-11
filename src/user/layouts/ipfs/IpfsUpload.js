@@ -40,7 +40,7 @@ class IpfsUpload extends Component {
     
     let instanceSimpleStorage = null;
     instanceSimpleStorage = new web3.eth.Contract(SimpleStorage.abi, ContractAddress);
-    console.log('=== SimpleStorage.SimpleStorage["networks"]["5777"]["address"] ===', SimpleStorage['networks']['5777']['address']);
+    console.log('=== SimpleStorage["networks"]["5777"]["address"] ===', SimpleStorage['networks']['5777']['address']);
     console.log('=== instanceSimpleStorage ===', instanceSimpleStorage);
 
     if (instanceSimpleStorage) {
