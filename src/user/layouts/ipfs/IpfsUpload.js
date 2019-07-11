@@ -40,7 +40,6 @@ class IpfsUpload extends Component {
     
     let instanceSimpleStorage = null;
     instanceSimpleStorage = new web3.eth.Contract(SimpleStorage.abi, ContractAddress);
-    console.log('=== SimpleStorage.address ===', SimpleStorage.address);
     console.log('=== SimpleStorage.SimpleStorage["networks"]["5777"]["address"] ===', SimpleStorage['networks']['5777']['address']);
     console.log('=== instanceSimpleStorage ===', instanceSimpleStorage);
 
@@ -79,7 +78,7 @@ class IpfsUpload extends Component {
       }
 
       // Upload IpfsHash to Blockchain node
-      instanceSimpleStorage.methods.set(result[0].hash).send({ from: this.state.account}).then((r) => {
+      instanceSimpleStorage.methods.set(result[0].hash).send({ from: this.state.accounts[0] }).then((r) => {
 
       }).then((ipfsHash) => {
         // In case of successful to upload to IPFS
