@@ -77,15 +77,12 @@ class IpfsUpload extends Component {
         return
       }
 
-      // Upload IpfsHash to Blockchain node
-      instanceSimpleStorage.methods.set(result[0].hash).send({ from: this.state.accounts[0] }).then((r) => {
-        this.setState({ ipfsHash: result[0].hash })
-        console.log('=== ipfsHash ===', this.state.ipfsHash)
-      })
+      // Save IpfsHash to Blockchain node
+      instanceSimpleStorage.methods.set(result[0].hash).send({ from: this.state.accounts[0] })
 
-      // // In case of successful to upload to IPFS
-      // this.setState({ ipfsHash: result[0].hash })
-      // console.log('=== ipfsHash ===', this.state.ipfsHash)
+      // Upload to upload to IPFS
+      this.setState({ ipfsHash: result[0].hash })
+      console.log('=== ipfsHash ===', this.state.ipfsHash)
     })
   }  
 
