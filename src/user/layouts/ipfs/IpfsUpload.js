@@ -35,10 +35,13 @@ class IpfsUpload extends Component {
     // Use web3 to get the user's accounts.
     const web3 = new Web3(window.ethereum);
     const accounts = await web3.eth.getAccounts();
+    const networkId = await web3.eth.net.getId();
+    
     let instanceSimpleStorage = null;
     instanceSimpleStorage = new web3.eth.Contract(SimpleStorage.abi, SimpleStorage.address);
+    console.log('=== SimpleStorage.address ===', SimpleStorage.address);
+    console.log('=== SimpleStorage.SimpleStorage["networks"]["5777"]["address"] ===', SimpleStorage['networks']['5777']['address']);
     console.log('=== instanceSimpleStorage ===', instanceSimpleStorage);
-
 
     if (instanceSimpleStorage) {
       // Set web3, accounts, and contract to the state, and then proceed with an
