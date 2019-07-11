@@ -16,6 +16,20 @@ import './css/pure-min.css'
 import './App.css'
 
 class App extends Component {
+
+  constructor(props, { authData }) {
+    super(props)
+
+    authData = this.props
+
+    this.state = {
+      /////// Default state
+      web3: null,
+      accounts: null
+    }
+  }
+
+
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <span>
