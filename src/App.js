@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
+// Get web3.js
+import getWeb3, { getGanacheWeb3, Web3 } from './util/getWeb3'
+
 // UI Components
 import LoginButtonContainer from './user/ui/loginbutton/LoginButtonContainer'
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
@@ -13,6 +16,20 @@ import './css/pure-min.css'
 import './App.css'
 
 class App extends Component {
+
+  constructor(props, { authData }) {
+    super(props)
+
+    authData = this.props
+
+    this.state = {
+      /////// Default state
+      web3: null,
+      accounts: null
+    }
+  }
+
+
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <span>

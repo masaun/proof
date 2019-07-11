@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ipfs from './ipfsApi'
+import getWeb3, { getGanacheWeb3, Web3 } from '../../../util/getWeb3'
 
 
 class IpfsUpload extends Component {
@@ -9,6 +10,11 @@ class IpfsUpload extends Component {
     authData = this.props
 
     this.state = {
+      /////// Default state
+      web3: null,
+      accounts: null,
+
+      /////// IPFS uploader
       buffer: null,
       ipfsHash: ''
     }
@@ -16,6 +22,33 @@ class IpfsUpload extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+
+  componentDidMount = async () => {
+    let SimpleStorage = {};
+
+    try {
+      SimpleStorage = require("../../../../build/contracts/SimpleStorage.json");
+    } catch (e) {
+      console.log(e);
+    }
+
+    // Use web3 to get the user's accounts.
+    const web3 = new Web3(window.ethereum);
+    const accounts = await web3.eth.getAccounts();
+    const networkId = await web3.eth.net.getId();
+    const ContractAddress = SimpleStorage['networks'][networkId]['address']
+    
+    let instanceSimpleStorage = null;
+    instanceSimpleStorage = new web3.eth.Contract(SimpleStorage.abi, ContractAddress);
+    console.log('=== SimpleStorage.SimpleStorage["networks"]["5777"]["address"] ===', SimpleStorage['networks']['5777']['address']);
+    console.log('=== instanceSimpleStorage ===', instanceSimpleStorage);
+
+    if (instanceSimpleStorage) {
+      // Set web3, accounts, and contract to the state, and then proceed with an
+      // example of interacting with the contract's methods.
+      this.setState({ web3, accounts, instanceSimpleStorage: instanceSimpleStorage });
+    }
+  };
 
   captureFile(event) {
     event.preventDefault()
@@ -35,6 +68,8 @@ class IpfsUpload extends Component {
   onSubmit(event) {
     event.preventDefault()
 
+    const { accounts, instanceSimpleStorage } = this.state;
+
     ipfs.files.add(this.state.buffer, (error, result) => {
       // In case of fail to upload to IPFS
       if (error) {
@@ -42,10 +77,18 @@ class IpfsUpload extends Component {
         return
       }
 
-      // In case of successful to upload to IPFS
+      // Save IpfsHash to Blockchain node
+      instanceSimpleStorage.methods.set(result[0].hash).send({ from: this.state.accounts[0] })
+
+      // Upload to upload to IPFS
       this.setState({ ipfsHash: result[0].hash })
       console.log('=== ipfsHash ===', this.state.ipfsHash)
     })
+
+    // Get saved value of ipfsHash on blockchain
+    instanceSimpleStorage.methods.get().call().then((r) => { console.log('== r ==', r); })
+    // [Result]：  == r == QmNgJ5tGRDNmXQyQQrehQBJWJXhQ6iPXazbiCrEc6odUHg
+
   }  
 
 
