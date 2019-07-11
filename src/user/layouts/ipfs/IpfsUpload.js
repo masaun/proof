@@ -84,6 +84,11 @@ class IpfsUpload extends Component {
       this.setState({ ipfsHash: result[0].hash })
       console.log('=== ipfsHash ===', this.state.ipfsHash)
     })
+
+    // Get saved value of ipfsHash on blockchain
+    instanceSimpleStorage.methods.get().call().then((r) => { console.log('== r ==', r); })
+    // [Result]：  == r == QmNgJ5tGRDNmXQyQQrehQBJWJXhQ6iPXazbiCrEc6odUHg
+
   }  
 
 
