@@ -40,7 +40,7 @@ class IpfsUpload extends Component {
     
     let instanceSimpleStorage = null;
     instanceSimpleStorage = new web3.eth.Contract(SimpleStorage.abi, ContractAddress);
-    console.log('=== SimpleStorage.SimpleStorage["networks"]["5777"]["address"] ===', SimpleStorage['networks']['5777']['address']);
+    console.log('=== SimpleStorage["networks"]["5777"]["address"] ===', SimpleStorage['networks']['5777']['address']);
     console.log('=== instanceSimpleStorage ===', instanceSimpleStorage);
 
     if (instanceSimpleStorage) {
@@ -86,9 +86,15 @@ class IpfsUpload extends Component {
     })
 
     // Get saved value of ipfsHash on blockchain
-    instanceSimpleStorage.methods.get().call().then((r) => { console.log('== r ==', r); })
-    // [Result]：  == r == QmNgJ5tGRDNmXQyQQrehQBJWJXhQ6iPXazbiCrEc6odUHg
+    instanceSimpleStorage.methods.get().call().then((r) => {
+      console.log('== r ==', r);  // [Result]： == r == QmNgJ5tGRDNmXQyQQrehQBJWJXhQ6iPXazbiCrEc6odUHg
+      instanceSimpleStorage.methods.savePhotoID(accounts[0], this.props.authData.name, r).send({ from: this.state.accounts[0] })
+    })
 
+    // Get saved value in struct
+    instanceSimpleStorage.methods.getPhotoID(accounts[0]).call().then((s) => {
+      console.log('== s ==', s);
+    })
   }  
 
 
