@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import ipfs from './ipfsApi'
+
 
 class IpfsUpload extends Component {
   constructor(props, { authData }) {
@@ -6,6 +8,10 @@ class IpfsUpload extends Component {
 
     authData = this.props
 
+    this.state = {
+      buffer: null,
+      ipfsHash: ''
+    }
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -28,7 +34,18 @@ class IpfsUpload extends Component {
   
   onSubmit(event) {
     event.preventDefault()
-    console.log('onSummit...');
+
+    ipfs.files.add(this.state.buffer, (error, result) => {
+      // In case of fail to upload to IPFS
+      if (error) {
+        console.error(error)
+        return
+      }
+
+      // In case of successful to upload to IPFS
+      this.setState({ ipfsHash: result[0].hash })
+      console.log('=== ipfsHash ===', this.state.ipfsHash)
+    })
   }  
 
 
