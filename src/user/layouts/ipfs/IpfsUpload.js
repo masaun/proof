@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ipfs from './ipfsApi'
+import getWeb3, { getGanacheWeb3, Web3 } from '../../../util/getWeb3'
 
 
 class IpfsUpload extends Component {
