@@ -90,6 +90,11 @@ class IpfsUpload extends Component {
       console.log('== r ==', r);  // [Result]： == r == QmNgJ5tGRDNmXQyQQrehQBJWJXhQ6iPXazbiCrEc6odUHg
       instanceSimpleStorage.methods.savePhotoID(accounts[0], this.props.authData.name, r).send({ from: this.state.accounts[0] })
     })
+
+    // Get saved value in struct
+    instanceSimpleStorage.methods.getPhotoID(accounts[0]).call().then((s) => {
+      console.log('== s ==', s);
+    })
   }  
 
 
