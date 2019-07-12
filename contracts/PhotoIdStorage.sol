@@ -8,13 +8,14 @@ contract PhotoIdStorage {
 
     struct PhotoID {
         address applicantAddress;
+        string DID;
         string authDataName;
         string IPFSHash;
     }
     mapping (address => PhotoID) photoIDs;
   
   
-    event SavePhotoID(address indexed applicantAddress, string indexed authDataName, string indexed ipfsHash);
+    event SavePhotoID(address applicantAddress, string indexed DID, string indexed authDataName, string indexed ipfsHash);
   
 
     function set(string memory x) public {
@@ -29,34 +30,38 @@ contract PhotoIdStorage {
 
     function savePhotoID(
         address _applicantAddress,
+        string memory _DID,
         string memory _authDataName, 
         string memory _ipfsHash
     ) 
-        public returns (address, string memory, string memory) 
+        public returns (address, string memory, string memory, string memory) 
     {
         PhotoID storage photoID = photoIDs[_applicantAddress];
+        photoID.DID = _DID;
         photoID.authDataName = _authDataName;
         photoID.IPFSHash = _ipfsHash;
 
-        emit SavePhotoID(_applicantAddress, _authDataName, _ipfsHash);
+        emit SavePhotoID(_applicantAddress, _DID, _authDataName, _ipfsHash);
 
-        return (_applicantAddress, _authDataName, _ipfsHash);
+        return (_applicantAddress, _DID, _authDataName, _ipfsHash);
     }
   
 
     function getPhotoID(
         address _applicantAddress
     ) 
-        public returns (address, string memory, string memory)
+        public returns (address, string memory, string memory, string memory)
     {
+        string memory _DID;
         string memory _authDataName;
         string memory _IPFSHash;
 
         PhotoID memory photoID = photoIDs[_applicantAddress];
+        _DID = photoID.DID;
         _authDataName = photoID.authDataName;
         _IPFSHash = photoID.IPFSHash;
 
-        return (_applicantAddress, _authDataName, _IPFSHash);
+        return (_applicantAddress, _DID, _authDataName, _IPFSHash);
     }
 
 }
