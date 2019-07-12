@@ -16,6 +16,9 @@ export function loginUser() {
     uport.requestCredentials().then((credentials) => {
       dispatch(userLoggedIn(credentials))
 
+      // [Debug]
+      console.log('=== credentials（created by uport.requestCredentials()）===', credentials)
+
       // Used a manual redirect here as opposed to a wrapper.
       // This way, once logged in a user can still access the home page.
       var currentLocation = browserHistory.getCurrentLocation()
