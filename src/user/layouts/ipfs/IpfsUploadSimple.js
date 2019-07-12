@@ -54,7 +54,7 @@ class IpfsUploadSimple extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <h1>IPFS uploader</h1>
+            <h1>IPFS uploader simple</h1>
             <p>
               <strong>Name</strong><br />
               {this.props.authData.name}
