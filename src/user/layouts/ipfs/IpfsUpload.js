@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ipfs from './ipfsApi'
 import getWeb3, { getGanacheWeb3, Web3 } from '../../../util/getWeb3'
+import { Credentials } from 'uport-credentials';
 
 
 class IpfsUpload extends Component {
@@ -70,6 +71,14 @@ class IpfsUpload extends Component {
 
     const { accounts, instancePhotoIdStorage } = this.state;
 
+    // Get "DID" and "Private Key"
+    const credential = Credentials.createIdentity();
+    const did = credential['did']
+    this.setState({ did: did })
+    console.log('=== credential ===', credential)
+    console.log('=== DID ===', credential['did'])
+
+    // Upload to IPFS
     ipfs.files.add(this.state.buffer, (error, result) => {
       // In case of fail to upload to IPFS
       if (error) {
@@ -88,7 +97,8 @@ class IpfsUpload extends Component {
     // Get saved value of ipfsHash on blockchain
     instancePhotoIdStorage.methods.get().call().then((r) => {
       console.log('== r ==', r);  // [Result]： == r == QmNgJ5tGRDNmXQyQQrehQBJWJXhQ6iPXazbiCrEc6odUHg
-      instancePhotoIdStorage.methods.savePhotoID(accounts[0], this.props.authData.name, r).send({ from: this.state.accounts[0] })
+      instancePhotoIdStorage.methods.savePhotoID(accounts[0], did, this.props.authData.name, r).send({ from: this.state.accounts[0] })
+      //instancePhotoIdStorage.methods.savePhotoID(accounts[0], this.props.authData.name, r).send({ from: this.state.accounts[0] })
     })
 
     // Get saved value in struct
