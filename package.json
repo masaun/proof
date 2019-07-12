@@ -50,6 +50,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "3box": "^1.9.1",
     "ipfs-api": "^26.1.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
