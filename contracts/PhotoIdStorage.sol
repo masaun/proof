@@ -2,7 +2,7 @@ pragma solidity >=0.4.17 <0.7.0;
 //pragma solidity ^0.4.17;
 
 
-contract SimpleStorage {
+contract PhotoIdStorage {
 
     string ipfsHash;
 
