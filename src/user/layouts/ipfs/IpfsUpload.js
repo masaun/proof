@@ -24,10 +24,10 @@ class IpfsUpload extends Component {
 
 
   componentDidMount = async () => {
-    let SimpleStorage = {};
+    let PhotoIdStorage = {};
 
     try {
-      SimpleStorage = require("../../../../build/contracts/SimpleStorage.json");
+      PhotoIdStorage = require("../../../../build/contracts/PhotoIdStorage.json");
     } catch (e) {
       console.log(e);
     }
@@ -36,17 +36,17 @@ class IpfsUpload extends Component {
     const web3 = new Web3(window.ethereum);
     const accounts = await web3.eth.getAccounts();
     const networkId = await web3.eth.net.getId();
-    const ContractAddress = SimpleStorage['networks'][networkId]['address']
+    const ContractAddress = PhotoIdStorage['networks'][networkId]['address']
     
-    let instanceSimpleStorage = null;
-    instanceSimpleStorage = new web3.eth.Contract(SimpleStorage.abi, ContractAddress);
-    console.log('=== SimpleStorage["networks"]["5777"]["address"] ===', SimpleStorage['networks']['5777']['address']);
-    console.log('=== instanceSimpleStorage ===', instanceSimpleStorage);
+    let instancePhotoIdStorage = null;
+    instancePhotoIdStorage = new web3.eth.Contract(PhotoIdStorage.abi, ContractAddress);
+    console.log('=== PhotoIdStorage["networks"]["5777"]["address"] ===', PhotoIdStorage['networks']['5777']['address']);
+    console.log('=== instancePhotoIdStorage ===', instancePhotoIdStorage);
 
-    if (instanceSimpleStorage) {
+    if (instancePhotoIdStorage) {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, instanceSimpleStorage: instanceSimpleStorage });
+      this.setState({ web3, accounts, instancePhotoIdStorage: instancePhotoIdStorage });
     }
   };
 
@@ -68,7 +68,7 @@ class IpfsUpload extends Component {
   onSubmit(event) {
     event.preventDefault()
 
-    const { accounts, instanceSimpleStorage } = this.state;
+    const { accounts, instancePhotoIdStorage } = this.state;
 
     ipfs.files.add(this.state.buffer, (error, result) => {
       // In case of fail to upload to IPFS
@@ -78,7 +78,7 @@ class IpfsUpload extends Component {
       }
 
       // Save IpfsHash to Blockchain node
-      instanceSimpleStorage.methods.set(result[0].hash).send({ from: this.state.accounts[0] })
+      instancePhotoIdStorage.methods.set(result[0].hash).send({ from: this.state.accounts[0] })
 
       // Upload to upload to IPFS
       this.setState({ ipfsHash: result[0].hash })
@@ -86,13 +86,13 @@ class IpfsUpload extends Component {
     })
 
     // Get saved value of ipfsHash on blockchain
-    instanceSimpleStorage.methods.get().call().then((r) => {
+    instancePhotoIdStorage.methods.get().call().then((r) => {
       console.log('== r ==', r);  // [Result]： == r == QmNgJ5tGRDNmXQyQQrehQBJWJXhQ6iPXazbiCrEc6odUHg
-      instanceSimpleStorage.methods.savePhotoID(accounts[0], this.props.authData.name, r).send({ from: this.state.accounts[0] })
+      instancePhotoIdStorage.methods.savePhotoID(accounts[0], this.props.authData.name, r).send({ from: this.state.accounts[0] })
     })
 
     // Get saved value in struct
-    instanceSimpleStorage.methods.getPhotoID(accounts[0]).call().then((s) => {
+    instancePhotoIdStorage.methods.getPhotoID(accounts[0]).call().then((s) => {
       console.log('== s ==', s);
     })
   }  
