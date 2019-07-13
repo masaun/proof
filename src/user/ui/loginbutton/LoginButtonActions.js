@@ -1,5 +1,7 @@
 import { uport } from './../../../util/connectors.js'
 import { browserHistory } from 'react-router'
+import getWeb3, { getGanacheWeb3, Web3 } from '../../../util/getWeb3'
+
 
 export const USER_LOGGED_IN = 'USER_LOGGED_IN'
 function userLoggedIn(user) {
@@ -18,6 +20,78 @@ export function loginUser() {
 
       // [Debug]
       console.log('=== credentials（created by uport.requestCredentials()）===', credentials)
+      console.log('=== credentials["address"]（created by uport.requestCredentials()）===', credentials["address"])
+      console.log('=== credentials["did"]（created by uport.requestCredentials()）===', credentials["did"])
+      console.log('=== credentials["name"]（created by uport.requestCredentials()）===', credentials["name"])
+
+      // Read contract of Profile.sol
+      let Profile = {};
+      try {
+        Profile = require("../../../../build/contracts/Profile.json");
+      } catch (e) {
+        console.log(e);
+      }
+      const web3 = new Web3(window.ethereum);
+
+      //const accounts = web3.eth.getAccounts();
+      //const networkId = web3.eth.net.getId();
+      const accounts = [];
+      const networkId = [];
+      web3.eth.getAccounts().then((accounts) => {
+        console.log('=== accounts ===', accounts);   // Success
+        console.log('=== accounts[0] ===', accounts[0]);   // Success
+
+        web3.eth.net.getId().then((networkId) => {
+          console.log('=== networkId ===', networkId); // Success
+
+          const ContractAddress = Profile['networks'][networkId]['address'];
+          
+          let instanceProfile = null;
+          instanceProfile = new web3.eth.Contract(Profile.abi, ContractAddress);
+          console.log('=== Profile["networks"]["5777"]["address"] ===', Profile['networks']['5777']['address']);
+          console.log('=== instanceProfile ===', instanceProfile);
+
+          if (instanceProfile) {
+            // Set web3, accounts, and contract to the state, and then proceed with an
+            // example of interacting with the contract's methods.
+            this.setState({ web3, accounts, instanceProfile: instanceProfile });
+          }
+
+          // Save in blockchain
+          instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: this.state.accounts[0] })
+
+          // Get saved value in struct
+          instanceProfile.methods.getUser(accounts[0]).call().then((s) => {
+            console.log('== s ==', s);
+          })
+        })
+      })      
+
+      // web3.eth.net.getId().then((networkId) => {
+      //   console.log('=== networkId ===', networkId); // Success
+      // })
+      
+      // const ContractAddress = Profile['networks'][networkId]['address'];
+      
+      // let instanceProfile = null;
+      // instanceProfile = new web3.eth.Contract(Profile.abi, ContractAddress);
+      // console.log('=== Profile["networks"]["5777"]["address"] ===', Profile['networks']['5777']['address']);
+      // console.log('=== instanceProfile ===', instanceProfile);
+
+      // if (instanceProfile) {
+      //   // Set web3, accounts, and contract to the state, and then proceed with an
+      //   // example of interacting with the contract's methods.
+      //   this.setState({ web3, accounts, instanceProfile: instanceProfile });
+      // }
+
+      // // Save in blockchain
+      // instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: this.state.accounts[0] })
+
+      // // Get saved value in struct
+      // instanceProfile.methods.getUser(accounts[0]).call().then((s) => {
+      //   console.log('== s ==', s);
+      // })
+
 
       // Used a manual redirect here as opposed to a wrapper.
       // This way, once logged in a user can still access the home page.

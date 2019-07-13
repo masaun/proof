@@ -2,13 +2,6 @@ import React, { Component } from 'react'
 import { Credentials } from 'uport-credentials';
 
 
-// Get "DID" and "Private Key"
-const credential = Credentials.createIdentity();
-console.log('=== credential ===', credential)  // Success to get log of "DID" and "Private Key"
-
-
-
-
 class Profile extends Component {
   constructor(props, { authData }) {
     super(props)
