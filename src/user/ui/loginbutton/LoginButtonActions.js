@@ -20,6 +20,9 @@ export function loginUser() {
 
       // [Debug]
       console.log('=== credentials（created by uport.requestCredentials()）===', credentials)
+      console.log('=== credentials["address"]（created by uport.requestCredentials()）===', credentials["address"])
+      console.log('=== credentials["did"]（created by uport.requestCredentials()）===', credentials["did"])
+      console.log('=== credentials["name"]（created by uport.requestCredentials()）===', credentials["name"])
 
       // Read contract of Profile.sol
       let Profile = {};
@@ -43,10 +46,14 @@ export function loginUser() {
         // example of interacting with the contract's methods.
         this.setState({ web3, accounts, instanceProfile: instanceProfile });
       }
-        
 
       // Save in blockchain
+      instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: this.state.accounts[0] })
 
+      // Get saved value in struct
+      instanceProfile.methods.getUser(accounts[0]).call().then((s) => {
+        console.log('== s ==', s);
+      })
 
       // Used a manual redirect here as opposed to a wrapper.
       // This way, once logged in a user can still access the home page.
