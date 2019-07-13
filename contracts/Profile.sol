@@ -19,7 +19,7 @@ contract Profile {
         string memory _DID,
         string memory _authDataName
     )
-        public returns (address, string memory, string memory, string memory) 
+        public returns (address, string memory, string memory) 
     {
         User storage user = users[_applicantAddress];
         user.applicantAddress = _applicantAddress;
