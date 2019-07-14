@@ -58,39 +58,16 @@ export function loginUser() {
           }
 
           // Save in blockchain
-          instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: this.state.accounts[0] })
+          instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: this.state.accounts[0] }).then((saveUser) => {
+            console.log('== saveUser ==', saveUser);
+          })
 
           // Get saved value in struct
-          instanceProfile.methods.getUser(accounts[0]).call().then((s) => {
-            console.log('== s ==', s);
+          instanceProfile.methods.getUser(accounts[0]).call().then((p) => {
+            console.log('== p ==', p);
           })
         })
-      })      
-
-      // web3.eth.net.getId().then((networkId) => {
-      //   console.log('=== networkId ===', networkId); // Success
-      // })
-      
-      // const ContractAddress = Profile['networks'][networkId]['address'];
-      
-      // let instanceProfile = null;
-      // instanceProfile = new web3.eth.Contract(Profile.abi, ContractAddress);
-      // console.log('=== Profile["networks"]["5777"]["address"] ===', Profile['networks']['5777']['address']);
-      // console.log('=== instanceProfile ===', instanceProfile);
-
-      // if (instanceProfile) {
-      //   // Set web3, accounts, and contract to the state, and then proceed with an
-      //   // example of interacting with the contract's methods.
-      //   this.setState({ web3, accounts, instanceProfile: instanceProfile });
-      // }
-
-      // // Save in blockchain
-      // instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: this.state.accounts[0] })
-
-      // // Get saved value in struct
-      // instanceProfile.methods.getUser(accounts[0]).call().then((s) => {
-      //   console.log('== s ==', s);
-      // })
+      })
 
 
       // Used a manual redirect here as opposed to a wrapper.
