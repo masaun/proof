@@ -2,7 +2,7 @@ var PhotoIdStorage = artifacts.require("./PhotoIdStorage.sol");
 
 contract('=== PhotoIdStorage ===', function(accounts) {
 
-  it("...should store the value 89.", function() {
+  it("...should store the uploaded IPFS hash.", function() {
     return PhotoIdStorage.deployed().then(function(instance) {
       photoIdStorageInstance = instance;
 
