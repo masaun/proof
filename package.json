@@ -68,8 +68,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test:truffle": "truffle test ./test/*",
-    "test": "node scripts/test.js --env=jsdom",  // Don't remove. Because If it remove, it fail to execute command of scripts
+    "test": "node scripts/test.js --env=jsdom",
+    "test:tf": "truffle test ./test/*",
+    "test": "node scripts/test.js --env=jsdom",
     "console": "truffle console --network development",
     "migrate": "truffle migrate --reset --network development",
     "migrate:ropsten": "truffle migrate --reset --network ropsten",
