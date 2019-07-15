@@ -23,6 +23,11 @@ export function loginUser() {
       console.log('=== credentials["address"]（created by uport.requestCredentials()）===', credentials["address"])
       console.log('=== credentials["did"]（created by uport.requestCredentials()）===', credentials["did"])
       console.log('=== credentials["name"]（created by uport.requestCredentials()）===', credentials["name"])
+      console.log('=== DataType of credentials["did"] ===', typeof credentials["did"])  // Result： string
+ 
+      // Remove "did:ethr:" from credentials["address"]
+      let userAddress = credentials["address"].replace("did:ethr:", '')
+      console.log('=== userAddress===', userAddress)
 
       // Read contract of Profile.sol
       let Profile = {};
@@ -51,16 +56,19 @@ export function loginUser() {
           console.log('=== Profile["networks"]["5777"]["address"] ===', Profile['networks']['5777']['address']);
           console.log('=== instanceProfile ===', instanceProfile);
 
-          if (instanceProfile) {
-            // Set web3, accounts, and contract to the state, and then proceed with an
-            // example of interacting with the contract's methods.
-            this.setState({ web3, accounts, instanceProfile: instanceProfile });
-          }
+          // if (instanceProfile) {
+          //   // Set web3, accounts, and contract to the state, and then proceed with an
+          //   // example of interacting with the contract's methods.
+          //   this.setState({ web3, accounts, instanceProfile: instanceProfile });
+          // }
 
           // Save in blockchain
-          instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: this.state.accounts[0] }).then((saveUser) => {
+          instanceProfile.methods.saveUser(userAddress, credentials['did'], credentials['name']).send({ from: accounts[0] }).then((saveUser) => {
             console.log('== saveUser ==', saveUser);
           })
+          // instanceProfile.methods.saveUser("0x6464835fdb341a46bffe7a25d63f6d9076e3032a", "did:ethr:0x.....", "Taro Yamada").send({ from: accounts[0] }).then((saveUser) => {
+          //   console.log('== saveUser ==', saveUser);
+          // })
 
           // Get saved value in struct
           instanceProfile.methods.getUser(accounts[0]).call().then((p) => {
