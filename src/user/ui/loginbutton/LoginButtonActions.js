@@ -51,14 +51,14 @@ export function loginUser() {
           console.log('=== Profile["networks"]["5777"]["address"] ===', Profile['networks']['5777']['address']);
           console.log('=== instanceProfile ===', instanceProfile);
 
-          if (instanceProfile) {
-            // Set web3, accounts, and contract to the state, and then proceed with an
-            // example of interacting with the contract's methods.
-            this.setState({ web3, accounts, instanceProfile: instanceProfile });
-          }
+          // if (instanceProfile) {
+          //   // Set web3, accounts, and contract to the state, and then proceed with an
+          //   // example of interacting with the contract's methods.
+          //   this.setState({ web3, accounts, instanceProfile: instanceProfile });
+          // }
 
           // Save in blockchain
-          instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: this.state.accounts[0] }).then((saveUser) => {
+          instanceProfile.methods.saveUser(credentials['address'], credentials['did'], credentials['name']).send({ from: accounts[0] }).then((saveUser) => {
             console.log('== saveUser ==', saveUser);
           })
 

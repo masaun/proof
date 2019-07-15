@@ -70,7 +70,6 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "test:tf": "truffle test ./test/*",
-    "test": "node scripts/test.js --env=jsdom",
     "console": "truffle console --network development",
     "migrate": "truffle migrate --reset --network development",
     "migrate:ropsten": "truffle migrate --reset --network ropsten",
