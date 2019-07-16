@@ -12,10 +12,6 @@ class Profile extends Component {
       /////// Default state
       web3: null,
       accounts: null,
-
-      /////// User data from uPort credencials
-      buffer: null,
-      ipfsHash: ''
     }
   }
 
