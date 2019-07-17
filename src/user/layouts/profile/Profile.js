@@ -12,6 +12,9 @@ class Profile extends Component {
       /////// Default state
       web3: null,
       accounts: null,
+      applicant_address: null,
+      did: null,
+      auth_data_name: null,
     }
   }
 
@@ -38,8 +41,13 @@ class Profile extends Component {
       this.setState({ web3, accounts, instanceProfile: instanceProfile });
     }
  
+    // Save in blockchain
+    const response = await instanceProfile.methods.saveUser("0x6464835fdb341a46bffe7a25d63f6d9076e3032a", "did:ethr:0x.....", "Taro Yamada").send({ from: this.state.accounts[0] })
+    console.log('== response ==', response);
+
     // Get saved value in struct
     instanceProfile.methods.getUser(accounts[0]).call().then((profileOfUport) => {
+      console.log('== accounts[0] ==', accounts[0]);
       console.log('== response of getUser function ==', profileOfUport);
 
       this.setState({ 
@@ -65,7 +73,7 @@ class Profile extends Component {
               {this.props.authData.name}
             </p>
             <p>
-              <strong>Applicant ddress</strong><br />
+              <strong>Applicant address</strong><br />
               { applicant_address }
             </p>
             <p>

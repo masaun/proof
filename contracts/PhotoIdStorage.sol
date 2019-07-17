@@ -33,7 +33,7 @@ contract PhotoIdStorage {
         string memory _DID,
         string memory _authDataName, 
         string memory _ipfsHash
-    ) 
+    )
         public returns (address, string memory, string memory, string memory) 
     {
         PhotoID storage photoID = photoIDs[_applicantAddress];
@@ -49,7 +49,7 @@ contract PhotoIdStorage {
 
     function getPhotoID(
         address _applicantAddress
-    ) 
+    )
         public returns (address, string memory, string memory, string memory)
     {
         string memory _DID;
